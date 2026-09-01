@@ -1,118 +1,124 @@
-
-
-```markdown
 # Windless Technologies
 
-A modern landing page for a specialized iPhone app development service, targeting non-technical founders and startups. Built with Next.js 14 and modern web technologies, this platform showcases our 90-day development process and fixed-price MVP solutions.
+The marketing website for Windless Technologies - a custom software
+consulting company specializing in 100% hand-coded websites, e-commerce
+platforms, and mobile apps. No WordPress, no page builders.
 
-## Tech Stack
+Built with Next.js (App Router), TypeScript, and Tailwind CSS.
 
-- Frontend Framework: Next.js 14 (with App Router)
-- Language: TypeScript
-- Styling: Tailwind CSS + shadcn/ui
-- Development Server: Vercel
-- Form Handling: Typeform Integration
+## Pages
 
-## Prerequisites
-Before you begin, ensure you have the following installed:
+- `/` - Home: hero, service pricing, why custom code, featured case studies
+- `/services` - Full pricing for web, e-commerce, and mobile app packages, plus add-ons
+- `/portfolio` - Case studies: Lunar Mart, Orbit CRM, Stellar App
+- `/about` - Mission, vision, core values, leadership
+- `/careers` - The invite-only internship program and how to apply
+- `/contact` - Project inquiry form
+- `/privacy`, `/terms` - Legal
 
-- Node.js (v18 or higher)
-- npm or yarn
-- Git
+## Design system
 
-### Getting Started
+Design concept: **drafting paper / blueprint**. Light mode reads as a
+drafting table - cream paper, dark graphite ink, a structural blueprint
+blue for interactive elements. Dark mode reads as an actual architectural
+blueprint print - light ink lines on deep blueprint-blue paper. Both are
+literal references to how real blueprints look, not an arbitrary palette
+inversion.
 
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/windless-technologies.git
-cd windless-technologies
-```
+- **Type:** IBM Plex Sans Condensed (display/headings), IBM Plex Sans
+  (body), IBM Plex Mono (pricing, stats, spec-sheet labels) - chosen for
+  the same reason the company sells custom code: precision and technical
+  credibility over a generic "safe" sans.
+- **Color tokens:** defined in `src/app/globals.css` as CSS custom
+  properties, light set on `:root` and a dark set under
+  `@media (prefers-color-scheme: dark)`. Every text/background/button
+  pairing is verified against the WCAG AA contrast minimums by
+  `scripts/check-contrast.mjs` (a small, dependency-free luminance/contrast
+  calculator - run it with `node scripts/check-contrast.mjs`).
+- **Motif:** blueprint corner brackets (`.corner-marks` in globals.css) on
+  cards/panels, a faint drafting grid on hero sections, and mono
+  "spec sheet" eyebrow labels above each section.
 
-2. Install dependencies
+## Getting started
+
 ```bash
 npm install
-# or
-yarn
-```
-
-3. Set up environment variables
-Create a .env.local file in the root directory and add the following:
-```env
-# Typeform
-NEXT_PUBLIC_TYPEFORM_ID="your-typeform-id"
-
-# Google Analytics (optional)
-NEXT_PUBLIC_GA_ID="your-ga-id"
-```
-
-4. Run the development server
-```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+Open http://localhost:3000.
 
-### Project Structure
+## Validation
+
 ```bash
-windless-technologies/
-├── src/
-│   ├── app/
-│   │   ├── page.tsx           # Landing page
-│   │   ├── layout.tsx         # Root layout
-│   │   └── loading.tsx        # Loading state
-│   ├── components/            # React components
-│   │   ├── ui/               # shadcn/ui components
-│   │   ├── shared/           # Shared components
-│   │   └── sections/         # Page sections
-│   ├── lib/                  # Utility functions
-│   │   ├── utils/           # Helper functions
-│   │   └── types/           # TypeScript types
-│   └── styles/              # Global styles
-├── public/                  # Static files
-└── package.json
-
+npm run typecheck   # tsc --noEmit
+npm run lint        # next lint
+npm run build        # production build
+node scripts/check-contrast.mjs   # WCAG AA contrast verification
 ```
 
-## Key Features
-Our landing page includes the following main sections:
+## Contact form / email delivery
 
-- Hero Section with clear value proposition
-- 90-day development timeline
-- Service pricing and features
-- Consultation booking integration
-- Optional web development offering
-- Mobile-responsive design
+The contact form (`/contact`) posts to `POST /api/contact`
+(`src/app/api/contact/route.ts`), which:
 
-## Development
-- Utilizing Next.js 14 for optimal performance
-- shadcn/ui components for consistent UI elements
-- Tailwind CSS for modern styling
-- TypeScript for type safety
-- Vercel for deployment and analytics
+- Validates and sanitizes every field server-side
+  (`src/lib/validation.ts`) - required fields, length limits, an email
+  format check, and control-character stripping.
+- Rate-limits by IP (`src/lib/rateLimit.ts`, 5 requests/minute/IP).
+- Sends the submission via [Resend](https://resend.com) using
+  `RESEND_API_KEY` and `CONTACT_TO_EMAIL` from the environment.
 
-### Deployment
-The application can be deployed on Vercel:
+**To go live, Erica needs to:**
 
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Configure environment variables
-4. Deploy
+1. Create a Resend account (or another transactional email provider) and
+   verify a sending domain.
+2. Set `RESEND_API_KEY` and `CONTACT_TO_EMAIL` as environment variables
+   in the hosting provider (see `.env.example`).
+3. Update the `from` address in `src/app/api/contact/route.ts` (currently
+   `onboarding@resend.dev`, Resend's shared sandbox sender) to an address
+   on the verified sending domain.
 
-## Contributing
+Until those are set, the form still validates correctly and logs
+submissions to the server console (`console.warn`) rather than silently
+dropping them - nothing is lost, it just isn't emailed yet.
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+**Also needs Erica's real value before going live:**
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+- `NEXT_PUBLIC_SITE_URL` (currently `https://windlesstechnologies.com`,
+  a placeholder) should be set to the real production domain once
+  registered/confirmed - it drives canonical URLs, the sitemap, and
+  Open Graph tags.
+- No scheduling link (e.g. Calendly) is wired up - "Schedule a call"
+  currently routes to the `/contact` form rather than an external
+  booking page, since no real link was provided. Swap it in
+  `src/components/Hero.tsx`, `Nav.tsx`, and `CtaBanner.tsx` if/when one
+  exists.
 
-### Acknowledgments
-- Built with shadcn/ui components
-- Powered by Next.js
-- Deployed on Vercel
-```
+## Security
+
+- Security headers (HSTS, X-Frame-Options, X-Content-Type-Options,
+  Referrer-Policy, Permissions-Policy, a Content-Security-Policy) are set
+  in `next.config.js` for every route.
+- No secrets are committed; all provider credentials are read from
+  environment variables (see `.env.example`).
+- Contact form input is validated and sanitized server-side before use.
+
+## SEO / AI crawler infrastructure
+
+- `src/app/robots.ts`, `src/app/sitemap.ts` - real, route-driven.
+- `public/llms.txt` - a plain-language summary for AI crawlers/answer
+  engines.
+- Per-page `metadata` (title, description, canonical, Open Graph) on
+  every route.
+
+## Accessibility
+
+Every route was scanned with `@axe-core/playwright` in both light and
+dark color schemes during development and came back with zero WCAG
+2.0/2.1 A/AA violations. That tooling is a throwaway dev dependency (not
+in `package.json`) - re-add it locally with
+`npm install --no-save @axe-core/playwright playwright` and run
+`node scripts/axe-scan.mjs` (after `npm run build`) to re-verify.
+`scripts/check-contrast.mjs` stays in the repo permanently as a
+lightweight, dependency-free contrast check for the color tokens.

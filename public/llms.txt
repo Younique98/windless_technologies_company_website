@@ -1,0 +1,47 @@
+# Windless Technologies
+
+> A custom software consulting company: 100% hand-coded websites, mobile
+> apps, and e-commerce platforms - no WordPress, no page builders.
+
+Windless Technologies builds custom-coded web and mobile software for
+small businesses, startups, and service companies. Every project is
+written from scratch rather than assembled from a template or page
+builder, which the company treats as its core technical differentiator:
+faster load times, no third-party plugin vulnerabilities, clean
+SEO-ready markup, and an architecture that scales with the business
+instead of being outgrown.
+
+## Services
+
+- **Web Design & Development** - a one-time Lump Sum build (starting at
+  $4,000), an ongoing Monthly Package ($200/mo covering design, hosting,
+  development, and support), or a custom E-commerce Package (starting at
+  $7,000, Shopify or fully custom).
+- **Mobile App Development** - cross-platform iOS and Android apps built
+  in Flutter, offered as Basic ($10,000 / 8 weeks), Standard ($15,000 /
+  10 weeks), or Premium ($20,000 / 16 weeks) packages.
+
+## Key pages
+
+- [Home](https://windlesstechnologies.com/): Overview, service pricing,
+  why custom code, and featured case studies.
+- [Services](https://windlesstechnologies.com/services): Full pricing
+  breakdown for web, e-commerce, and mobile app packages, plus add-ons.
+- [Portfolio](https://windlesstechnologies.com/portfolio): Case studies -
+  Lunar Mart (e-commerce), Orbit CRM (custom CRM), and Stellar App
+  (mobile task management).
+- [About](https://windlesstechnologies.com/about): Mission, vision, core
+  values, and leadership.
+- [Careers](https://windlesstechnologies.com/careers): The invite-only
+  internship program (software engineering and UI/UX tracks) and how to
+  apply.
+- [Contact](https://windlesstechnologies.com/contact): Project inquiry
+  form.
+
+## Technical implementation
+
+- **Framework:** Next.js (App Router), TypeScript, Tailwind CSS
+- **Contact form:** Server-side validated and rate-limited, delivered via
+  email
+
+Source: https://github.com/Younique98/windless_technologies_company_website

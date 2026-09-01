@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+  Design concept: "drafting paper / blueprint".
+  Light mode reads as a drafting table - cream paper, dark graphite ink,
+  a structural blueprint blue for interactive elements. Dark mode reads
+  as an actual blueprint print - light ink lines on deep blueprint-blue
+  paper, the classic architectural reprographic process. The two modes
+  are not just inverted tokens; they are two sides of the same real-world
+  reference.
+*/
+:root {
+  color-scheme: light;
+  --bg: #f5f6f2;
+  --surface: #ffffff;
+  --surface-2: #ebeee8;
+  /* Decorative dividers only - not relied on to carry meaning, so this
+     does not need to clear the 3:1 non-text contrast minimum. */
+  --border: #dfe3db;
+  /* Form control outlines / focus rings - verified 3:1+ against both
+     --bg and --surface via scripts/check-contrast.mjs. */
+  --border-strong: #7c868d;
+  --ink-primary: #12181c;
+  --ink-secondary: #3d4a4f;
+  --ink-muted: #5c6b70;
+  /* Text/link usage vs. solid button-fill usage are separate tokens so
+     each can be tuned to its own contrast requirement (link text against
+     the page background vs. white text against a filled button). */
+  --blueprint: #1c4a72;
+  --blueprint-fill: #153a5a;
+  --redline: #a8391a;
+  --redline-fill: #a8391a;
+  --error: #a8391a;
+  /* Always a light color, for text/icons sitting on a saturated fill
+     color (buttons, the CTA band) - unlike --bg, this does not flip
+     with the theme, because a fill's brightness stays roughly constant
+     across themes while the page background inverts. Verified against
+     both fill tokens in scripts/check-contrast.mjs. */
+  --on-fill: #f5f6f2;
+  /* Secondary/muted text on a saturated fill (e.g. the CTA band's supporting
+     copy) - dimmer than --on-fill but still verified 4.5:1+ against both
+     fill tokens per theme. */
+  --muted-on-fill: #c7d0d6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #0c2038;
+    --surface: #122b47;
+    --surface-2: #173456;
+    --border: #1c3a58;
+    --border-strong: #7c8b9f;
+    --ink-primary: #f2f4ee;
+    --ink-secondary: #c3d3de;
+    --ink-muted: #93aabb;
+    --blueprint: #8fc1ea;
+    --blueprint-fill: #2c5c8a;
+    --redline: #f0855a;
+    --redline-fill: #c43a18;
+    --error: #f0855a;
+    --on-fill: #f2f4ee;
+    --muted-on-fill: #dbe4ea;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink-primary);
+}
+
+/* Visible keyboard focus ring everywhere - never suppressed. */
+:focus-visible {
+  outline: 2px solid var(--blueprint);
+  outline-offset: 2px;
+}
+
+/* Blueprint corner brackets used on cards/panels for the drafting-table
+   motif (technical-drawing crop marks). Decorative only (aria-hidden). */
+.corner-marks {
+  position: relative;
+}
+.corner-marks::before,
+.corner-marks::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+.corner-marks::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--blueprint);
+  border-left: 2px solid var(--blueprint);
+}
+.corner-marks::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--blueprint);
+  border-right: 2px solid var(--blueprint);
+}
+
+/* Fades the hero's grid background into the solid page background toward
+   the bottom. Uses color-mix() rather than a Tailwind color-opacity
+   modifier, because our CSS-custom-property colors aren't defined in the
+   space-separated-channel form that modifier requires - applying one
+   here would silently do nothing. */
+.hero-fade {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--bg) 35%, transparent) 0%,
+    var(--bg) 85%
+  );
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+}

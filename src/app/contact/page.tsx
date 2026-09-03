@@ -3,6 +3,7 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { SectionEyebrow } from "@/components/SectionEyebrow";
 import { ContactForm } from "@/components/ContactForm";
+import { BookACall } from "@/components/BookACall";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -18,6 +19,12 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  // NEXT_PUBLIC_CALENDLY_URL is unset until Erica creates her own free
+  // Calendly account and adds her personal scheduling link. Until then this
+  // stays empty and the "book a call" option below is skipped entirely -
+  // the page never shows an empty/broken widget in the meantime.
+  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL?.trim();
+
   return (
     <>
       <Nav />
@@ -39,6 +46,12 @@ export default function ContactPage() {
             <ContactForm />
           </div>
         </section>
+
+        {calendlyUrl && (
+          <section className="max-w-6xl mx-auto px-6 pb-16 sm:pb-20">
+            <BookACall calendlyUrl={calendlyUrl} />
+          </section>
+        )}
       </main>
       <Footer />
     </>

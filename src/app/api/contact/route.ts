@@ -2,8 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { isRateLimited } from "@/lib/rateLimit";
 import { validateContactForm } from "@/lib/validation";
+import { hasTrustedOrigin } from "@/lib/origin";
 
 export async function POST(request: NextRequest) {
+  // This route is unauthenticated and session-less (no cookies to steal), so
+  // a full token-based CSRF scheme is unnecessary - but with no such check
+  // at all, any third-party page could still silently POST here on a
+  // visitor's behalf. An Origin/Referer allow-list check is the right-sized
+  // defense: it rejects cross-site submissions while adding no state or
+  // friction for the real form.
+  if (!hasTrustedOrigin(request)) {
+    return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
+  }
+
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
   if (isRateLimited(ip)) {
     return NextResponse.json(

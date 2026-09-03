@@ -1,5 +1,5 @@
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://windlesstechnologies.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://windlesstechnologies.com";
 
 export const SITE_NAME = "Windless Technologies";
 

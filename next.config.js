@@ -36,11 +36,16 @@ const securityHeaders = [
       // user-supplied input into HTML (the contact form is JSON
       // fetch()->JSON response only), and every other directive below
       // stays fully locked down.
-      "script-src 'self' 'unsafe-inline'",
+      // https://assets.calendly.com is Calendly's own widget.js, loaded only
+      // on /contact and only when NEXT_PUBLIC_CALENDLY_URL is set - it draws
+      // the optional "book a call" embed described in the widget's own docs.
+      "script-src 'self' 'unsafe-inline' https://assets.calendly.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "img-src 'self' data:",
       "font-src 'self' https://fonts.gstatic.com",
       "connect-src 'self'",
+      // The Calendly embed itself is an iframe pointed at calendly.com.
+      "frame-src https://calendly.com",
       "form-action 'self'",
       "frame-ancestors 'none'",
       "base-uri 'self'",

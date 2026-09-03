@@ -3,7 +3,7 @@ import { SectionEyebrow } from "@/components/SectionEyebrow";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { INTERNSHIP_TRACKS, STRUCTURE, CAREERS_FAQ } from "@/data/careers";
-import { CONTACT_EMAIL } from "@/lib/site";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Careers & Internships",
@@ -149,10 +149,10 @@ export default function CareersPage() {
             </p>
             <p className="mt-4 text-ink-secondary max-w-2xl leading-relaxed">
               Interested in being considered for a future cohort? Reach out
-              at{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-blueprint hover:underline">
-                {CONTACT_EMAIL}
-              </a>
+              via{" "}
+              <Link href="/contact" className="font-semibold text-blueprint hover:underline">
+                our contact page
+              </Link>
               .
             </p>
           </div>

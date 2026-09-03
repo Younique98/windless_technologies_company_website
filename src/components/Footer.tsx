@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_HREF } from "@/lib/site";
 
 export const Footer = () => (
   <footer className="border-t border-line bg-surface">
@@ -51,14 +50,9 @@ export const Footer = () => (
         </p>
         <ul className="space-y-2">
           <li>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="text-ink-secondary hover:text-blueprint break-all">
-              {CONTACT_EMAIL}
-            </a>
-          </li>
-          <li>
-            <a href={`tel:${CONTACT_PHONE_HREF}`} className="text-ink-secondary hover:text-blueprint">
-              {CONTACT_PHONE}
-            </a>
+            <Link href="/contact" className="text-ink-secondary hover:text-blueprint">
+              Get in touch
+            </Link>
           </li>
         </ul>
         <ul className="mt-4 space-y-2">

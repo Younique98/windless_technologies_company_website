@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
-import { CONTACT_EMAIL, CONTACT_PHONE } from "@/lib/site";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -222,18 +222,12 @@ export default function PrivacyPage() {
           <section className={sectionClass}>
             <h2 className={hClass}>Contact Us</h2>
             <p className={pClass}>
-              If you have any questions about this Privacy Policy, You can
-              contact us:
+              If you have any questions about this Privacy Policy, You can{" "}
+              <Link href="/contact" className="text-blueprint hover:underline">
+                contact us here
+              </Link>
+              .
             </p>
-            <ul className={listClass}>
-              <li>
-                By email:{" "}
-                <a href={`mailto:${CONTACT_EMAIL}`} className="text-blueprint hover:underline">
-                  {CONTACT_EMAIL}
-                </a>
-              </li>
-              <li>By phone: {CONTACT_PHONE}</li>
-            </ul>
           </section>
         </section>
       </main>

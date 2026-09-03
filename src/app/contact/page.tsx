@@ -3,7 +3,6 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { SectionEyebrow } from "@/components/SectionEyebrow";
 import { ContactForm } from "@/components/ContactForm";
-import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_HREF } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -34,25 +33,6 @@ export default function ContactPage() {
               we&apos;ll follow up with next steps - typically within one
               business day.
             </p>
-
-            <dl className="mt-10 space-y-5 font-mono text-sm">
-              <div>
-                <dt className="text-ink-muted uppercase tracking-wider text-xs">Email</dt>
-                <dd className="mt-1">
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-blueprint hover:underline break-all">
-                    {CONTACT_EMAIL}
-                  </a>
-                </dd>
-              </div>
-              <div>
-                <dt className="text-ink-muted uppercase tracking-wider text-xs">Phone</dt>
-                <dd className="mt-1">
-                  <a href={`tel:${CONTACT_PHONE_HREF}`} className="text-blueprint hover:underline">
-                    {CONTACT_PHONE}
-                  </a>
-                </dd>
-              </div>
-            </dl>
           </div>
 
           <div className="corner-marks rounded-md border border-line bg-surface p-6 sm:p-8">

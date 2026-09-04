@@ -59,6 +59,8 @@ export const BookACall = ({ calendlyUrl }: Props) => {
           className="calendly-inline-widget"
           data-url={themedUrl ?? calendlyUrl}
           style={{ minWidth: "280px", height: "700px" }}
+          role="group"
+          aria-label="Calendly scheduling widget: pick a date and time to book a call"
         />
       </div>
       <Script
